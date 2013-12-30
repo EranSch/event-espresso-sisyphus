@@ -25,15 +25,21 @@ class EE_Sisphus{
 
 	public function __construct() {
 		add_action( 'wp_enqueue_scripts', array( $this, 'load_sisphus' ));
+		add_action( 'wp_enqueue_scripts', array( $this, 'load_style' ));
 		add_action( 'action_hook_espresso_registration_page_bottom', array( $this, 'initialize_sisyphus' ));
 	}
 
-	function load_sisphus() {
+	public function load_sisphus() {
 		wp_enqueue_script(
 			'sisphus',
 			plugins_url( 'sisyphus/sisyphus.min.js' , __FILE__ ),
 			array( 'jquery' )
 		);
+	}
+
+	public function load_style(){
+		wp_register_style( 'sisyphus-alert', plugins_url( 'css/sisyphus-alert.css' , __FILE__ ) );
+		wp_enqueue_style( 'sisyphus-alert' );
 	}
 
 	public function initialize_sisyphus( $event_id, $event_meta, $all_meta ){
@@ -57,20 +63,6 @@ class EE_Sisphus{
 			})(jQuery);
 		</script>
 
-		<style type="text/css">
-			.sisyphus-alert {
-			    height: 30px;
-			    position: fixed;
-			    background-color: rgba(255, 255, 144, 0.75);
-			    z-index: 10;
-			    width: 100%;
-			    bottom: 0;
-			    border-bottom: 2px solid black;
-			    text-align: center;
-			    padding-top: 9px;
-			    font-weight: bold;
-			}
-		</style>
 		<?php
 	}
 
